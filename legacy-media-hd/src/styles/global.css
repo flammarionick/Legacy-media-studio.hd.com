@@ -1,0 +1,111 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-legacy-dark: #0c0c0c;
+    --color-legacy-light: #f5f5f5;
+    --color-legacy-gold: #d4af37;
+    --color-legacy-gold-dark: #b8972b;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    @apply bg-black;
+  }
+  
+  body {
+    @apply bg-black text-legacy-light font-body antialiased overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+  
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl sm:text-4xl;
+  }
+  
+  h3 {
+    @apply text-2xl sm:text-3xl;
+  }
+  
+  a {
+    @apply transition-all duration-300;
+  }
+  
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-legacy-dark;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-legacy-gold rounded-full;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-full font-medium transition-all duration-300 uppercase tracking-wider;
+  }
+  
+  .btn-gold {
+    @apply bg-legacy-gold text-black hover:bg-legacy-gold-dark;
+  }
+  
+  .btn-outline {
+    @apply border border-legacy-light hover:bg-legacy-light hover:text-black;
+  }
+  
+  .form-input {
+    @apply w-full bg-transparent border-b border-legacy-light/30 py-3 px-1 focus:border-legacy-gold focus:outline-none transition duration-300;
+  }
+  
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 md:px-8 py-20;
+  }
+  
+  .gold-underline {
+    @apply relative pb-2;
+  }
+  
+  .gold-underline::after {
+    @apply content-[''] absolute bottom-0 left-0 w-16 h-0.5 bg-legacy-gold;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-legacy-gold to-legacy-gold-dark bg-clip-text text-transparent;
+  }
+  
+  .glass-effect {
+    @apply bg-legacy-dark/70 backdrop-blur-sm border border-legacy-light/10;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse-slow {
+    50% { opacity: 0.7; }
+  }
+}
