@@ -7,14 +7,16 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
-    { path: "/services", label: "Services" },
+    { path: "/production", label: "Production" },
+    { path: "/rentals", label: "Rentals" },
     { path: "/portfolio", label: "Portfolio" },
     { path: "/contact", label: "Contact" },
   ];
+
 
   useEffect(() => {
     const handleScroll = () => {

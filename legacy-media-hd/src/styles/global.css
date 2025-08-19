@@ -109,3 +109,35 @@
     50% { opacity: 0.7; }
   }
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --legacy-gold: #D4AF37;
+  --legacy-dark: #0A1A2F;
+  --legacy-light: #F8F9FA;
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-md font-medium transition-all duration-300;
+  }
+  
+  .btn-gold {
+    @apply bg-legacy-gold text-legacy-dark hover:bg-[#c9a227] hover:shadow-lg;
+  }
+  
+  .btn-outline {
+    @apply border border-legacy-gold text-legacy-gold hover:bg-legacy-gold/10;
+  }
+  
+  .section-container {
+    @apply container mx-auto px-4 max-w-6xl;
+  }
+}
+
+body {
+  @apply bg-black text-white;
+}

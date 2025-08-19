@@ -7,6 +7,8 @@ import Services from '../pages/Services'
 import Portfolio from '../pages/Portfolio'
 import Contact from '../pages/Contact'
 import NotFound from '../pages/NotFound'
+import Production from '../pages/Production';
+import Rentals from '../pages/Rentals';
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -16,13 +18,12 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/production" element={<Production />} />
+        <Route path="/rentals" element={<Rentals />} />
+        {/* ... other routes ... */}
       </Routes>
     </AnimatePresence>
-  )
-}
+  );
+};
 
 export default AnimatedRoutes

@@ -6,7 +6,7 @@
     "@babel/plugin-transform-react-jsx": "^7.27.1",
     "@fontsource/inter": "^5.2.6",
     "@react-three/drei": "^9.122.0",
-    "@react-three/fiber": "^8.15.27",
+    "@react-three/fiber": "^8.18.0",
     "framer-motion": "^12.23.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

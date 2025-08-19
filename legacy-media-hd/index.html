@@ -14,6 +14,74 @@
             --dark: #212529;
             --gray: #6C757D;
         }
+
+        
+
+                #threejs-logo-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 80px;  /* Reduced container size */
+            height: 80px; /* Reduced container size */
+            z-index: 1000;
+            background: rgba(10, 26, 47, 0.7);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        #threejs-logo-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        
+        :root {
+            --primary: #0A1A2F;
+            --secondary: #D4AF37;
+            /* ... rest of your styles ... */
+        }
+/* Logo CSS */
+.logo-3d {
+  font-family: 'Times New Roman', serif;
+  font-weight: bold;
+  font-size: 1.8rem; /* Adjust to match your nav bar height */
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.4s ease;
+}
+
+.gold-text {
+  background: linear-gradient(45deg, #f2bb05, #F9E076, #D4AF37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 
+    2px 2px 4px rgba(0,0,0,0.3),
+    0 0 10px rgba(212, 175, 55, 0.5),
+    -1px -1px 0 rgba(255,255,255,0.2);
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Hover Animation */
+.logo-3d:hover {
+  transform: perspective(300px) rotateY(10deg) scale(1.05);
+  filter: drop-shadow(0 0 12px rgba(241, 186, 5, 0.6));
+}
+
+/* Optional: Add a crown icon (like your reference) */
+.logo-3d::before {
+  content: '';
+  display: inline-block;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path fill="%23D4AF37" d="M50 5L70 40H30z M20 40L40 15 60 40z"/></svg>') no-repeat;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
         
         * {
             margin: 0;
@@ -57,6 +125,7 @@
         .btn:hover {
             background-color: #c9a227;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .btn-outline {
@@ -235,6 +304,48 @@
             margin-bottom: 15px;
         }
         
+        /* Production Section */
+        .production {
+            background-color: var(--primary);
+            color: white;
+            padding: 80px 0;
+        }
+        
+        .production-categories {
+            display: grid;
+            gap: 40px;
+        }
+        
+        .production-category {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .production-category:last-child {
+            border-bottom: none;
+        }
+        
+        .production-category h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .production-category p {
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .production-preview {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 300px;
+        }
+        
         /* Quote Section */
         .quote {
             background-color: var(--primary);
@@ -383,6 +494,10 @@
                 flex-direction: column;
             }
             
+            .production-category {
+                grid-template-columns: 1fr;
+            }
+            
             .nav-links {
                 display: none;
             }
@@ -393,17 +508,23 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">LEGACY MEDIA</div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
+      <div class="container">
+          <nav>
+              <!-- Replace this text logo too -->
+              <a href="/" class="logo-3d">
+                <span class="gold-text">LEGACY MEDIA</span>
+              </a>
+              
+              <ul class="nav-links">
+                  <li><a href="#home">Home</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#production">Production</a></li>
+                  <li><a href="#services">Services</a></li>
+                  <li><a href="#contact">Contact</a></li>
+              </ul>
+          </nav>
+      </div>
+</div>
     </header>
 
     <!-- Hero Section -->
@@ -413,7 +534,7 @@
                 <h1>Capturing Stories with Vision</h1>
                 <p>Professional video production and photography services that bring your brand to life.</p>
                 <div class="hero-btns">
-                    <a href="#portfolio" class="btn btn-outline">See Our Work</a>
+                    <a href="https://legacymstudios.com/our-portolio/" class="btn btn-outline">See Our Work</a>
                     <a href="#quote" class="btn">Book a Project</a>
                 </div>
             </div>
@@ -437,6 +558,66 @@
                 </div>
                 <div class="about-image">
                     <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our team working">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production Section -->
+    <section class="production" id="production">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Production Work</h2>
+                <p>Explore our premium production services</p>
+            </div>
+            
+            <div class="production-categories">
+                <!-- Weddings -->
+                <div class="production-category">
+                    <div>
+                        <h2>WEDDINGS</h2>
+                        <p>Trust Legacy Media Studios with your cherished moments. Our skilled videographers create cinematic masterpieces that capture your wedding celebration's essence.</p>
+                        <a href="#wedding-packages" class="btn">View Packages</a>
+                    </div>
+                    <div class="production-preview" style="background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;">
+                        <a href="#view-wedding-reel" class="btn btn-outline" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">View Reel</a>
+                    </div>
+                </div>
+                
+                <!-- Music Videos -->
+                <div class="production-category">
+                    <div class="production-preview" style="background: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;">
+                        <a href="#view-music-reel" class="btn btn-outline" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">View Reel</a>
+                    </div>
+                    <div>
+                        <h2>MUSIC VIDEOS</h2>
+                        <p>Unlock your music's potential with Legacy Media Studios' video production services. We blend artistry and technical skill to bring your vision to life.</p>
+                        <a href="#music-packages" class="btn">View Packages</a>
+                    </div>
+                </div>
+                
+                <!-- Commercials -->
+                <div class="production-category">
+                    <div>
+                        <h2>COMMERCIALS</h2>
+                        <p>Legacy Media Studios specializes in creating captivating and engaging commercials that effectively drive remarkable results for our diverse range of clients.</p>
+                        <a href="#quote" class="btn">Receive a Quote</a>
+                    </div>
+                    <div class="production-preview" style="background: url('https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;">
+                        <a href="#view-commercial-reel" class="btn btn-outline" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">View Reel</a>
+                    </div>
+                </div>
+                
+                <!-- Movies/Short Films -->
+                <div class="production-category">
+                    <div class="production-preview" style="background: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;">
+                        <a href="https://legacymediahd.com/our-portfolio/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">View Portfolio</a>
+                    </div>
+                    <div>
+                        <h2>MOVIES / SHORT FILMS</h2>
+                        <p>Legacy Media Studios specializes in creating captivating films that resonate with viewers and leave a lasting impact.</p>
+                        <a href="https://legacymediahd.com/our-portfolio/" target="_blank" rel="noopener noreferrer" class="btn">View Portfolio</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -481,6 +662,69 @@
             </div>
         </div>
     </section>
+
+<!-- Rentals Section -->
+<section class="rentals" id="rentals" style="background-color: white; color: #0A1A2F;">
+    <div class="container">
+        <div class="section-title">
+            <h2 style="color: #D4AF37;">PROFESSIONAL LEVEL D.I.Y</h2>
+            <h3 style="font-size: 2.5rem; margin-top: 1rem;">EQUIPMENT RENTAL</h3>
+            <p style="margin-top: 2rem;">Cinema cameras and accessories for professionals and enthusiasts</p>
+        </div>
+
+        <div class="rentals-intro" style="max-width: 800px; margin: 0 auto 60px; text-align: center;">
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+                Legacy Media Rentals proudly offers an extensive and diverse range of high-quality video production equipment, 
+                meticulously curated to meet all your filming needs, whether you are a professional filmmaker or an enthusiastic hobbyist.
+            </p>
+        </div>
+
+        <div class="equipment-grid" style="display: grid; gap: 40px;">
+            <!-- RED Camera -->
+            <div class="equipment-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 40px;">
+                <div class="equipment-image" style="background: #f5f5f5; padding: 30px; border-radius: 8px; text-align: center;">
+                    <div style="height: 250px; background: url('https://images.unsplash.com/photo-1605346576608-92f1346b67d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; border-radius: 4px;"></div>
+                </div>
+                <div class="equipment-details">
+                    <h3 style="font-size: 1.8rem; color: #D4AF37; margin-bottom: 15px;">RED V-RAPTOR FULL FRAME 8K DIGITAL CINEMA CAMERA</h3>
+                    <p style="margin-bottom: 25px; line-height: 1.7;">
+                        The RED V-RAPTOR Full Frame is a high-performance digital cinema camera that delivers stunning 8K resolution footage 
+                        with exceptional image quality and versatility.
+                    </p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#quote" class="btn" style="background-color: #D4AF37; color: #0A1A2F;">Get Quote</a>
+                        <a href="#red-camera" class="btn" style="border: 2px solid #D4AF37; color: #D4AF37; background: transparent;">View Category</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SONY Camera -->
+            <div class="equipment-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding-top: 40px;">
+                <div class="equipment-details" style="order: 1;">
+                    <h3 style="font-size: 1.8rem; color: #D4AF37; margin-bottom: 15px;">SONY FX6 CINEMA CAMERA</h3>
+                    <p style="margin-bottom: 25px; line-height: 1.7;">
+                        The SONY FX6 is a compact and versatile cinema camera with exceptional low-light performance and 
+                        customizable shooting modes. Perfect for professionals in need of professional-grade video capabilities 
+                        in a portable package.
+                    </p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#quote" class="btn" style="background-color: #D4AF37; color: #0A1A2F;">Get Quote</a>
+                        <a href="#sony-camera" class="btn" style="border: 2px solid #D4AF37; color: #D4AF37; background: transparent;">View Category</a>
+                    </div>
+                </div>
+                <div class="equipment-image" style="order: 2; background: #f5f5f5; padding: 30px; border-radius: 8px; text-align: center;">
+                    <div style="height: 250px; background: url('https://images.unsplash.com/photo-1603470218809-11a7d726329a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; border-radius: 4px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px;">
+            <a href="#all-equipment" class="btn" style="background-color: #0A1A2F; color: white; padding: 15px 40px; font-size: 1.1rem;">
+                View All Rental Equipment
+            </a>
+        </div>
+    </div>
+</section>    
 
     <!-- Quote Section -->
     <section class="quote" id="quote">
@@ -575,12 +819,83 @@
             <div class="footer-links">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
+                <a href="#production">Production</a>
                 <a href="#services">Services</a>
-                <a href="#portfolio">Portfolio</a>
                 <a href="#contact">Contact</a>
             </div>
             <p class="copyright">© 2025 Legacy Media Studios. All rights reserved.</p>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('threejs-logo-container');
+            const canvas = document.getElementById('threejs-logo-canvas');
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(
+                60, // Increased FOV for closer view
+                container.clientWidth / container.clientHeight,
+                0.1,
+                1000
+            );
+            camera.position.z = 2; // Camera closer to object
+
+            const renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                alpha: true,
+                antialias: true
+            });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // Brighter
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xd4af37, 2.0); // Stronger
+            directionalLight.position.set(3, 3, 3);
+            scene.add(directionalLight);
+
+            // Model loading
+            const loader = new THREE.GLTFLoader();
+            loader.load(
+                '/models/legacy-logo.glb',
+                function(gltf) {
+                    const model = gltf.scene;
+                    model.scale.set(1.5, 1.5, 1.5); // Increased model size
+                    model.position.y = -0.2; // Slightly lowered
+                    scene.add(model);
+
+                    // Animation
+                    let isHovered = false;
+                    function animate() {
+                        requestAnimationFrame(animate);
+                        model.rotation.y += isHovered ? 0.05 : 0.02;
+                        renderer.render(scene, camera);
+                    }
+                    animate();
+
+                    // Hover effects
+                    container.addEventListener('mouseenter', () => {
+                        isHovered = true;
+                        container.style.borderColor = 'rgba(212, 175, 55, 0.8)';
+                    });
+                    container.addEventListener('mouseleave', () => {
+                        isHovered = false;
+                        container.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+                    });
+                },
+                undefined,
+                function(error) {
+                    console.error('Error loading model:', error);
+                    container.innerHTML = `
+                        <img src="/logo-fallback.png" alt="Logo" 
+                             style="width:100%; height:100%; object-fit:contain; padding:10px;">
+                    `;
+                }
+            );
+        });
+    </script>
 </body>
 </html>
