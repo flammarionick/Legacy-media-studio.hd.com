@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legacy Media Studios - Cinematic Storytelling</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
     <style>
         /* Global Styles */
         :root {
@@ -14,92 +16,18 @@
             --dark: #212529;
             --gray: #6C757D;
         }
-
-        
-
-                #threejs-logo-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 80px;  /* Reduced container size */
-            height: 80px; /* Reduced container size */
-            z-index: 1000;
-            background: rgba(10, 26, 47, 0.7);
-            border-radius: 8px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        #threejs-logo-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        
-        :root {
-            --primary: #0A1A2F;
-            --secondary: #D4AF37;
-            /* ... rest of your styles ... */
-        }
-/* Logo CSS */
-.logo-3d {
-  font-family: 'Times New Roman', serif;
-  font-weight: bold;
-  font-size: 1.8rem; /* Adjust to match your nav bar height */
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.4s ease;
-}
-
-.gold-text {
-  background: linear-gradient(45deg, #f2bb05, #F9E076, #D4AF37);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 
-    2px 2px 4px rgba(0,0,0,0.3),
-    0 0 10px rgba(212, 175, 55, 0.5),
-    -1px -1px 0 rgba(255,255,255,0.2);
-  letter-spacing: 1px;
-  position: relative;
-  display: inline-block;
-}
-
-/* Hover Animation */
-.logo-3d:hover {
-  transform: perspective(300px) rotateY(10deg) scale(1.05);
-  filter: drop-shadow(0 0 12px rgba(241, 186, 5, 0.6));
-}
-
-/* Optional: Add a crown icon (like your reference) */
-.logo-3d::before {
-  content: '';
-  display: inline-block;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path fill="%23D4AF37" d="M50 5L70 40H30z M20 40L40 15 60 40z"/></svg>') no-repeat;
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  vertical-align: middle;
-}
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
         }
         
         body {
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: #fff;
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
         }
         
         .container {
@@ -109,64 +37,20 @@
             padding: 0 20px;
         }
         
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--secondary);
-            color: var(--primary);
-            border: none;
-            border-radius: 4px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background-color: #c9a227;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--secondary);
-            color: var(--primary);
-        }
-        
         section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
-        }
-        
-        .section-title:after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--secondary);
-            margin: 20px auto;
+            padding: 100px 0;
         }
         
         /* Header Styles */
         header {
-            background-color: var(--primary);
-            color: white;
+            background-color: rgba(13, 27, 52, 0.95);
             padding: 20px 0;
             position: fixed;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
         }
         
         nav {
@@ -175,11 +59,14 @@
             align-items: center;
         }
         
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--secondary);
-            font-family: 'Playfair Display', serif;
+        .logo-img {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
         }
         
         .nav-links {
@@ -192,84 +79,242 @@
         }
         
         .nav-links a {
-            color: white;
+            color: #fff;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .nav-links a:hover {
-            color: var(--secondary);
+            color: #D4AF37;
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(10, 26, 47, 0.8), rgba(10, 26, 47, 0.8)), 
-                        url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
             height: 100vh;
-            color: white;
+            background: linear-gradient(rgba(13, 27, 52, 0.85), rgba(13, 27, 52, 0.85)), url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&h=900&q=80');
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
+            justify-content: center;
             text-align: center;
+            color: white;
             padding-top: 80px;
         }
         
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, #D4AF37, #FFDF6B, #D4AF37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         
-        .hero h1 {
-            font-size: 3.5rem;
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(45deg, #D4AF37, #B08D26);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0 15px;
+            border: none;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #D4AF37;
+            color: #D4AF37;
+            box-shadow: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn-outline:hover {
+            background: #D4AF37;
+            color: white;
+        }
+        
+        /* 3D Navigation Section */
+        .interactive-nav {
+            height: 100vh;
+            position: relative;
+            background: radial-gradient(circle at center, #1a2b4d 0%, #0d1b34 70%);
+            overflow: hidden;
+        }
+        
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .nav-content {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+            color: white;
+        }
+        
+        .nav-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
             margin-bottom: 20px;
+            background: linear-gradient(45deg, #D4AF37, #FFDF6B, #D4AF37);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+        .nav-content p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
         
-        .hero-btns {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        .info-points {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            z-index: 50;
+        }
+        
+        .point {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #D4AF37, transparent);
+            box-shadow: 0 0 20px #D4AF37;
+            cursor: pointer;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s;
+        }
+        
+        .point:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+        
+        .point-label {
+            position: absolute;
+            color: white;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transform: translateY(-40px);
+            opacity: 0;
+            transition: opacity 0.3s;
+            background: rgba(13, 27, 52, 0.9);
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #D4AF37;
+        }
+        
+        .point:hover .point-label {
+            opacity: 1;
         }
         
         /* About Section */
         .about {
-            background-color: var(--light);
+            background-color: #fff;
+            color: #333;
         }
         
         .about-content {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 50px;
+            justify-content: space-between;
         }
         
         .about-text {
             flex: 1;
-        }
-        
-        .about-text h2 {
-            color: var(--primary);
-        }
-        
-        .about-text p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
+            min-width: 300px;
+            padding-right: 40px;
         }
         
         .about-image {
             flex: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-width: 300px;
         }
         
         .about-image img {
             width: 100%;
-            height: auto;
-            display: block;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #0d1b34;
+        }
+        
+        .about p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .about h3 {
+            color: #D4AF37;
+            margin: 30px 0 15px;
+            font-size: 1.5rem;
+        }
+        
+        .about ul {
+            list-style: none;
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .about ul li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+            color: #555;
+        }
+        
+        .about ul li:before {
+            content: "•";
+            color: #D4AF37;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
         }
         
         /* Services Section */
@@ -348,121 +393,226 @@
         
         /* Quote Section */
         .quote {
-            background-color: var(--primary);
+            background: linear-gradient(rgba(13, 27, 52, 0.95), rgba(13, 27, 52, 0.95)), url('https://images.unsplash.com/photo-1580477667995-2b94f01c9516?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+        }
+        
+        .quote h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 25px;
+        }
+        
+        .quote p {
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-size: 1.3rem;
+            line-height: 1.7;
+        }
+        
+        /* Rental Section */
+        .rental {
+            background-color: #fff;
+            color: #333;
+        }
+        
+        .rental-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .rental-card {
+            background: #f8f9fa;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .rental-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .rental-card i {
+            font-size: 3rem;
+            color: #D4AF37;
+            margin-bottom: 25px;
+        }
+        
+        .rental-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #0d1b34;
+        }
+        
+        .rental-card p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        
+        .rental-card .price {
+            font-size: 2rem;
+            color: #D4AF37;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        /* Contact Section - Updated to match image */
+        .contact {
+            background-color: #0d1b34;
             color: white;
         }
         
-        .quote-form {
-            max-width: 600px;
+        .contact .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .contact .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .contact .section-title p {
+            font-size: 1.3rem;
+            color: #ccc;
+            max-width: 700px;
             margin: 0 auto;
-            background-color: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
-        .form-group {
+        .contact-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #D4AF37, transparent);
+            margin: 40px auto;
+            width: 80%;
+        }
+        
+        .contact-section {
+            margin-bottom: 60px;
+        }
+        
+        .contact-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
             margin-bottom: 20px;
+            color: #fff;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--primary);
-            font-weight: 500;
+        .contact-details-simple p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #ccc;
         }
         
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 1em;
-        }
-        
-        /* Contact Section */
-        .contact {
-            background-color: var(--light);
-        }
-        
-        .contact-container {
-            display: flex;
-            gap: 50px;
-        }
-        
-        .contact-info {
-            flex: 1;
-        }
-        
-        .contact-info h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .contact-details {
-            margin-bottom: 30px;
-        }
-        
-        .contact-details p {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .contact-details i {
-            margin-right: 10px;
-            color: var(--secondary);
-        }
-        
-        .social-links {
+        .social-icons {
             display: flex;
             gap: 15px;
+            margin-top: 20px;
         }
         
-        .social-links a {
-            display: inline-flex;
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
+            font-size: 1.5rem;
             transition: all 0.3s ease;
         }
         
-        .social-links a:hover {
-            background-color: var(--secondary);
-            color: var(--primary);
+        .social-icon:hover {
+            background: #D4AF37;
             transform: translateY(-3px);
+        }
+        
+        .form-field {
+            margin-bottom: 30px;
+        }
+        
+        .form-field label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .form-field input::placeholder,
+        .form-field textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-field textarea {
+            min-height: 150px;
+            resize: vertical;
         }
         
         /* Footer */
         footer {
             background-color: var(--primary);
             color: white;
-            padding: 30px 0;
+            padding: 60px 0 30px;
             text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        
+        .footer-column h3 {
+            color: #D4AF37;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-column p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         
         .footer-links a {
@@ -478,28 +628,61 @@
         .copyright {
             font-size: 0.9rem;
             color: rgba(255,255,255,0.7);
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
-        /* Responsive Styles */
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
+            section {
+                padding: 80px 0;
+            }
+            
+            .hero-content h1 {
                 font-size: 2.5rem;
             }
             
-            .about-content {
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .about-content, .production-category {
                 flex-direction: column;
+            }
+            
+            .production-category:nth-child(even) {
+                flex-direction: column;
+            }
+            
+            .about-text {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .btn {
+                padding: 14px 30px;
+                margin: 10px 5px;
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
             }
             
             .contact-container {
                 flex-direction: column;
             }
             
-            .production-category {
-                grid-template-columns: 1fr;
+            .footer-content {
+                flex-direction: column;
             }
             
-            .nav-links {
-                display: none;
+            .footer-links {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -508,23 +691,22 @@
 <body>
     <!-- Header -->
     <header>
-      <div class="container">
-          <nav>
-              <!-- Replace this text logo too -->
-              <a href="/" class="logo-3d">
-                <span class="gold-text">LEGACY MEDIA</span>
-              </a>
-              
-              <ul class="nav-links">
-                  <li><a href="#home">Home</a></li>
-                  <li><a href="#about">About</a></li>
-                  <li><a href="#production">Production</a></li>
-                  <li><a href="#services">Services</a></li>
-                  <li><a href="#contact">Contact</a></li>
-              </ul>
-          </nav>
-      </div>
-</div>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo-img-container">
+                    <img src="src/logo.png" alt="Legacy Media" class="logo-img">
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#production">Production</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#rental">Rental</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <!-- Hero Section -->
@@ -541,6 +723,38 @@
         </div>
     </section>
 
+    <!-- 3D Interactive Navigation -->
+    <section class="interactive-nav">
+        <div id="canvas-container"></div>
+        
+        <div class="info-points">
+            <div class="point" style="top: 25%; left: 20%;" data-section="about">
+                <div class="point-label">About Us</div>
+            </div>
+            <div class="point" style="top: 60%; left: 35%;" data-section="production">
+                <div class="point-label">Production</div>
+            </div>
+            <div class="point" style="top: 40%; left: 70%;" data-section="services">
+                <div class="point-label">Services</div>
+            </div>
+            <div class="point" style="top: 75%; left: 60%;" data-section="rental">
+                <div class="point-label">Rental</div>
+            </div>
+            <div class="point" style="top: 20%; left: 50%;" data-section="portfolio">
+                <div class="point-label">Portfolio</div>
+            </div>
+            <div class="point" style="top: 65%; left: 80%;" data-section="contact">
+                <div class="point-label">Contact</div>
+            </div>
+        </div>
+        
+        <div class="nav-content">
+            <h2>Explore Our Universe</h2>
+            <p>Navigate through our services and offerings by interacting with the orbital elements. Click on any point to discover more.</p>
+            <a href="#about" class="btn">Begin Journey</a>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section class="about" id="about">
         <div class="container">
@@ -554,7 +768,9 @@
                         <li>10+ years of storytelling expertise</li>
                         <li>Cutting-edge equipment</li>
                         <li>Client-focused creative process</li>
+                        <li>Cinematic approach to all projects</li>
                     </ul>
+                    <a href="#contact" class="btn">Get in Touch</a>
                 </div>
                 <div class="about-image">
                     <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our team working">
@@ -623,7 +839,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+     <!-- Services Section -->
     <section class="services" id="services">
         <div class="container">
             <div class="section-title">
@@ -663,155 +879,131 @@
         </div>
     </section>
 
-<!-- Rentals Section -->
-<section class="rentals" id="rentals" style="background-color: white; color: #0A1A2F;">
-    <div class="container">
-        <div class="section-title">
-            <h2 style="color: #D4AF37;">PROFESSIONAL LEVEL D.I.Y</h2>
-            <h3 style="font-size: 2.5rem; margin-top: 1rem;">EQUIPMENT RENTAL</h3>
-            <p style="margin-top: 2rem;">Cinema cameras and accessories for professionals and enthusiasts</p>
-        </div>
-
-        <div class="rentals-intro" style="max-width: 800px; margin: 0 auto 60px; text-align: center;">
-            <p style="font-size: 1.1rem; line-height: 1.8;">
-                Legacy Media Rentals proudly offers an extensive and diverse range of high-quality video production equipment, 
-                meticulously curated to meet all your filming needs, whether you are a professional filmmaker or an enthusiastic hobbyist.
-            </p>
-        </div>
-
-        <div class="equipment-grid" style="display: grid; gap: 40px;">
-            <!-- RED Camera -->
-            <div class="equipment-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 40px;">
-                <div class="equipment-image" style="background: #f5f5f5; padding: 30px; border-radius: 8px; text-align: center;">
-                    <div style="height: 250px; background: url('https://images.unsplash.com/photo-1605346576608-92f1346b67d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; border-radius: 4px;"></div>
-                </div>
-                <div class="equipment-details">
-                    <h3 style="font-size: 1.8rem; color: #D4AF37; margin-bottom: 15px;">RED V-RAPTOR FULL FRAME 8K DIGITAL CINEMA CAMERA</h3>
-                    <p style="margin-bottom: 25px; line-height: 1.7;">
-                        The RED V-RAPTOR Full Frame is a high-performance digital cinema camera that delivers stunning 8K resolution footage 
-                        with exceptional image quality and versatility.
-                    </p>
-                    <div style="display: flex; gap: 15px;">
-                        <a href="#quote" class="btn" style="background-color: #D4AF37; color: #0A1A2F;">Get Quote</a>
-                        <a href="#red-camera" class="btn" style="border: 2px solid #D4AF37; color: #D4AF37; background: transparent;">View Category</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SONY Camera -->
-            <div class="equipment-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding-top: 40px;">
-                <div class="equipment-details" style="order: 1;">
-                    <h3 style="font-size: 1.8rem; color: #D4AF37; margin-bottom: 15px;">SONY FX6 CINEMA CAMERA</h3>
-                    <p style="margin-bottom: 25px; line-height: 1.7;">
-                        The SONY FX6 is a compact and versatile cinema camera with exceptional low-light performance and 
-                        customizable shooting modes. Perfect for professionals in need of professional-grade video capabilities 
-                        in a portable package.
-                    </p>
-                    <div style="display: flex; gap: 15px;">
-                        <a href="#quote" class="btn" style="background-color: #D4AF37; color: #0A1A2F;">Get Quote</a>
-                        <a href="#sony-camera" class="btn" style="border: 2px solid #D4AF37; color: #D4AF37; background: transparent;">View Category</a>
-                    </div>
-                </div>
-                <div class="equipment-image" style="order: 2; background: #f5f5f5; padding: 30px; border-radius: 8px; text-align: center;">
-                    <div style="height: 250px; background: url('https://images.unsplash.com/photo-1603470218809-11a7d726329a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; border-radius: 4px;"></div>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 60px;">
-            <a href="#all-equipment" class="btn" style="background-color: #0A1A2F; color: white; padding: 15px 40px; font-size: 1.1rem;">
-                View All Rental Equipment
-            </a>
-        </div>
-    </div>
-</section>    
 
     <!-- Quote Section -->
     <section class="quote" id="quote">
         <div class="container">
+            <h2>Ready to Start Your Project?</h2>
+            <p>Get a personalized quote tailored to your specific needs and vision.</p>
+            <a href="#contact" class="btn">Request a Quote</a>
+        </div>
+    </section>
+
+    <!-- Rentals Section -->
+    <section class="rentals" id="rentals" style="background-color: white; color: #0A1A2F;">
+        <div class="container">
             <div class="section-title">
-                <h2>Get a Project Quote</h2>
-                <p>Fill out the form below and we'll respond within 24 hours</p>
+                <h2 style="color: #D4AF37;">PROFESSIONAL LEVEL D.I.Y</h2>
+                <h3 style="font-size: 2.5rem; margin-top: 1rem;">EQUIPMENT RENTAL</h3>
+                <p style="margin-top: 2rem;">Cinema cameras and accessories for professionals and enthusiasts</p>
             </div>
-            <div class="quote-form">
-                <form>
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+
+            <div class="rentals-intro" style="max-width: 800px; margin: 0 auto 60px; text-align: center;">
+                <p style="font-size: 1.1rem; line-height: 1.8;"> Legacy Media Rentals proudly offers an extensive and diverse range of high-quality video production equipment, 
+                    meticulously curated to meet all your filming needs, whether you are a professional filmmaker or an enthusiastic hobbyist.
+                </p>
+            </div>
+
+            <div class="equipment-grid" style="display: grid; gap: 40px;">
+                <!-- RED Camera -->
+                <div class="equipment-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 40px;">
+                    <div class="equipment-image" style="background: #f5f5f5; padding: 30px; border-radius: 8px; text-align: center;">
+                        <div style="height: 250px; background: url('https://images.unsplash.com/photo-1605346576608-92f1346b67d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; border-radius: 4px;"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    <div class="equipment-details">
+                        <h3 style="font-size: 1.8rem; color: #D4AF37; margin-bottom: 15px;">RED V-RAPTOR FULL FRAME 8K DIGITAL CINEMA CAMERA</h3>
+                        <p style="margin-bottom: 25px; line-height: 1.7;">
+                            The RED V-RAPTOR Full Frame is a high-performance digital cinema camera that delivers stunning 8K resolution footage 
+                            with exceptional image quality and versatility.
+                        </p>
+                        <div style="display: flex; gap: 15px;">
+                            <a href="#quote" class="btn" style="background-color: #D4AF37; color: #0A1A2F;">Get Quote</a>
+                            <a href="#red-camera" class="btn" style="border: 2px solid #D4AF37; color: #D4AF37; background: transparent;">View Category</a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number (Optional)</label>
-                        <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                </div>
+
+                <!-- SONY Camera -->
+                <div class="equipment-card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding-top: 40px;">
+                    <div class="equipment-details" style="order: 1;">
+                        <h3 style="font-size: 1.8rem; color: #D4AF37; margin-bottom: 15px;">SONY FX6 CINEMA CAMERA</h3>
+                        <p style="margin-bottom: 25px; line-height: 1.7;">
+                            The SONY FX6 is a compact and versatile cinema camera with exceptional low-light performance and 
+                            customizable shooting modes. Perfect for professionals in need of professional-grade video capabilities 
+                            in a portable package.
+                        </p>
+                        <div style="display: flex; gap: 15px;">
+                            <a href="#quote" class="btn" style="background-color: #D4AF37; color: #0A1A2F;">Get Quote</a>
+                            <a href="#sony-camera" class="btn" style="border: 2px solid #D4AF37; color: #D4AF37; background: transparent;">View Category</a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="service">Service Needed</label>
-                        <select id="service" class="form-control" required>
-                            <option value="">Select a service</option>
-                            <option value="video-production">Video Production</option>
-                            <option value="photography">Photography</option>
-                            <option value="drone">Drone & Aerial</option>
-                            <option value="3d-animation">3D Animation</option>
-                            <option value="post-production">Post Production</option>
-                            <option value="other">Other</option>
-                        </select>
+                    <div class="equipment-image" style="order: 2; background: #f5f5f5; padding: 30px; border-radius: 8px; text-align: center;">
+                        <div style="height: 250px; background: url('https://images.unsplash.com/photo-1603470218809-11a7d726329a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; border-radius: 4px;"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="message">Tell us about your project</label>
-                        <textarea id="message" class="form-control" placeholder="Describe your vision, timeline, and any specific requests" required></textarea>
-                    </div>
-                    <button type="submit" class="btn" style="width: 100%;">Submit Request</button>
-                </form>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="#all-equipment" class="btn" style="background-color: #0A1A2F; color: white; padding: 15px 40px; font-size: 1.1rem;">
+                    View All Rental Equipment
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section - Updated to match image -->
     <section class="contact" id="contact">
         <div class="container">
             <div class="section-title">
                 <h2>Contact Us</h2>
                 <p>Let's bring your vision to life. Reach out below!</p>
             </div>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Get in Touch</h3>
-                    <div class="contact-details">
-                        <p><i class="fas fa-envelope"></i> hello@legacymediahd.com</p>
-                        <p><i class="fas fa-phone"></i> +250 788 123 456</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
-                    </div>
-                    <h3>Follow Us</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-vimeo-v"></i></a>
-                    </div>
+            
+            <div class="contact-divider"></div>
+            
+            <div class="contact-section">
+                <h3>Get in Touch</h3>
+                <div class="contact-details-simple">
+                    <p>hello@legacymediahd.com</p>
+                    <p>+250 788 123 456</p>
+                    <p>Kigali, Rwanda</p>
                 </div>
-                <div class="quote-form">
-                    <form>
-                        <div class="form-group">
-                            <label for="contact-name">Your Name</label>
-                            <input type="text" id="contact-name" class="form-control" placeholder="Enter your name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-email">Your Email</label>
-                            <input type="email" id="contact-email" class="form-control" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-message">Message</label>
-                            <textarea id="contact-message" class="form-control" placeholder="How can we help you?" required></textarea>
-                        </div>
-                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
-                    </form>
+            </div>
+            
+            <div class="contact-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <div class="social-icon">💬</div>
+                    <div class="social-icon">💬</div>
+                    <div class="social-icon">💬</div>
+                    <div class="social-icon">💬</div>
                 </div>
+            </div>
+            
+            <div class="contact-divider"></div>
+            
+            <div class="contact-section">
+                <div class="form-field">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-field">
+                    <label>Your Email</label>
+                    <input type="email" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-field">
+                    <label>Message</label>
+                    <textarea placeholder="How can we help you?"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Send Message</button>
             </div>
         </div>
     </section>
+
+    
 
     <!-- Footer -->
     <footer>
@@ -826,76 +1018,136 @@
             <p class="copyright">© 2025 Legacy Media Studios. All rights reserved.</p>
         </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.min.js"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('threejs-logo-container');
-            const canvas = document.getElementById('threejs-logo-canvas');
+        // Three.js implementation for 3D scene
+        let scene, camera, renderer, controls;
+        let objects = [];
+        
+        function init() {
+            // Create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0d1b34);
             
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(
-                60, // Increased FOV for closer view
-                container.clientWidth / container.clientHeight,
-                0.1,
-                1000
-            );
-            camera.position.z = 2; // Camera closer to object
-
-            const renderer = new THREE.WebGLRenderer({
-                canvas: canvas,
-                alpha: true,
-                antialias: true
-            });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 1.0); // Brighter
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
             scene.add(ambientLight);
             
-            const directionalLight = new THREE.DirectionalLight(0xd4af37, 2.0); // Stronger
-            directionalLight.position.set(3, 3, 3);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
             scene.add(directionalLight);
-
-            // Model loading
-            const loader = new THREE.GLTFLoader();
-            loader.load(
-                '/models/legacy-logo.glb',
-                function(gltf) {
-                    const model = gltf.scene;
-                    model.scale.set(1.5, 1.5, 1.5); // Increased model size
-                    model.position.y = -0.2; // Slightly lowered
-                    scene.add(model);
-
-                    // Animation
-                    let isHovered = false;
-                    function animate() {
-                        requestAnimationFrame(animate);
-                        model.rotation.y += isHovered ? 0.05 : 0.02;
-                        renderer.render(scene, camera);
+            
+            const pointLight = new THREE.PointLight(0xD4AF37, 1, 100);
+            pointLight.position.set(10, 10, 10);
+            scene.add(pointLight);
+            
+            // Create central sphere (planet)
+            const geometry = new THREE.SphereGeometry(1, 32, 32);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x1a2b4d,
+                shininess: 100,
+                specular: 0xD4AF37
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+            objects.push(sphere);
+            
+            // Add rings around the sphere
+            const ringGeometry = new THREE.RingGeometry(1.5, 2, 32);
+            const ringMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xD4AF37, 
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.5
+            });
+            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+            ring.rotation.x = Math.PI / 2;
+            scene.add(ring);
+            objects.push(ring);
+            
+            // Add orbital elements
+            for (let i = 0; i < 20; i++) {
+                const size = Math.random() * 0.1 + 0.05;
+                const orbitalGeometry = new THREE.SphereGeometry(size, 16, 16);
+                const orbitalMaterial = new THREE.MeshPhongMaterial({
+                    color: 0xD4AF37,
+                    emissive: 0xB08D26,
+                    emissiveIntensity: 0.5
+                });
+                const orbital = new THREE.Mesh(orbitalGeometry, orbitalMaterial);
+                
+                // Position in orbit
+                const radius = 2 + Math.random() * 1.5;
+                const angle = Math.random() * Math.PI * 2;
+                orbital.position.x = Math.cos(angle) * radius;
+                orbital.position.y = (Math.random() - 0.5) * 1.5;
+                orbital.position.z = Math.sin(angle) * radius;
+                
+                scene.add(orbital);
+                objects.push(orbital);
+            }
+            
+            // Add controls - enable zoom from anywhere
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.rotateSpeed = 0.5;
+            controls.enableZoom = true;
+            controls.zoomSpeed = 1.0;
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Add click events to points
+            const points = document.querySelectorAll('.point');
+            points.forEach(point => {
+                point.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    if (section === 'portfolio') {
+                        window.location.href = 'https://legacymstudios.com/our-portolio/';
+                    } else {
+                        document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
                     }
-                    animate();
-
-                    // Hover effects
-                    container.addEventListener('mouseenter', () => {
-                        isHovered = true;
-                        container.style.borderColor = 'rgba(212, 175, 55, 0.8)';
-                    });
-                    container.addEventListener('mouseleave', () => {
-                        isHovered = false;
-                        container.style.borderColor = 'rgba(212, 175, 55, 0.3)';
-                    });
-                },
-                undefined,
-                function(error) {
-                    console.error('Error loading model:', error);
-                    container.innerHTML = `
-                        <img src="/logo-fallback.png" alt="Logo" 
-                             style="width:100%; height:100%; object-fit:contain; padding:10px;">
-                    `;
-                }
-            );
-        });
+                });
+            });
+            
+            // Start animation
+            animate();
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate the central sphere slowly
+            objects[0].rotation.y += 0.001;
+            
+            // Rotate orbitals at different speeds
+            for (let i = 2; i < objects.length; i++) {
+                objects[i].rotation.x += 0.01;
+                objects[i].rotation.y += 0.01;
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize the 3D scene
+        init();
     </script>
 </body>
 </html>
